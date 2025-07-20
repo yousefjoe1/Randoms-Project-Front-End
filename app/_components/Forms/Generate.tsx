@@ -7,6 +7,24 @@ const Generate = () => {
 
   const [currentType, setCurrentType] = useState('advice');
 
+  // console.log("🚀 ~ Generate ~ user:", user)
+  // const [userData, setUserData] = useState(null);
+  // console.log("🚀 ~ Generate ~ userData:", userData)
+
+  // useEffect(() => {
+  //   if (user) {
+  //     import('axios').then(({ default: axios }) => {
+  //       axios.post('http://localhost:5000/api',{user} ,{
+  //         headers: { Authorization: `Bearer ${user.id}` },
+  //       })
+  //       .then((res) => {
+  //         console.log("🚀 ~ useEffect ~ res:", res);
+  //         setUserData(res.data.user);
+  //       });
+  //     });
+  //   }
+  // }, [user]);
+
   return (
     <div className="lg:w-1/2 w-full mx-3 flex flex-col gap-3 items-center bg-gray-300 rounded-xl py-2">
       <div>
