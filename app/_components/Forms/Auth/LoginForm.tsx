@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Link from "next/link";
 import { isTokenExist } from "@/app/_actions/isTokenExist";
 import { loginAction } from "@/app/_actions/loginAcation";
+import { Loader } from "lucide-react";
 
 // import { useRouter } from "next/navigation";
 type Inputs = {
@@ -124,7 +125,7 @@ const LoginForm = () => {
             disabled={isSubmit}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"
           >
-            {isSubmit ? <div className="loader"></div> : <span>Login</span>}
+            {isSubmit ? <Loader /> : <span>Login</span>}
           </button>
           {isAuthenticated && (
             <Link
