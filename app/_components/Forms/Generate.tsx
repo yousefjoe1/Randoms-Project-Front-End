@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 
 interface DataType {
-  data: { text: string; author: string } | null; // Adjusted to match the expected structure
+  data: { text: string; author: string,type: string } | null; // Adjusted to match the expected structure
   text: string;
   author: string;
   id: number;
@@ -17,7 +17,9 @@ const Generate = () => {
   const showToast = (msg: string, color: string, time: number = 5000) => {
     toast(msg, {
       duration: time,
-      // className: `border-t-4 border-${color}-500 rounded-b text-${color}-900 px-4 py-3 shadow-md`,
+      style: {
+        backgroundColor: color,
+      }
     });
   };
 
@@ -25,7 +27,7 @@ const Generate = () => {
   const [loading, setLoading] = useState(false);
 
   const genratingType = ["advice", "quote", "joke"];
-  const [currentType, setCurrentType] = useState("advice");
+  const [currentType, setCurrentType] = useState("random");
 
   const getFn = async () => {
     setLoading(true);
@@ -37,7 +39,7 @@ const Generate = () => {
       setTimeout(() => {
         if (res && res.data) {
           if (res.data) {
-            showToast(`${currentType} Generated`, "green");
+            showToast(`${currentType} Generated`, "lightgreen");
           }
           setData(res.data);
         } else {
@@ -90,13 +92,17 @@ const Generate = () => {
     <div className="lg:w-1/2 w-full mx-3 flex flex-col gap-3 items-center bg-gray-300 rounded-xl py-2">
       <Toaster closeButton position="bottom-center" />
 
-      <div>
+      <button>
+        
+      </button>
+
+      <div className={`${currentType == 'random'? 'h-0 overflow-hidden' : ''} transition-all duration-[3000ms]`}>
         {genratingType.map((type, index) => (
           <button
             title={type}
             key={index}
             className={`${
-              currentType == type ? "bg-blue-400" : ""
+              currentType == type ? "bg-blue-400" : "shadow-sm"
             } p-2 rounded-xl inline-flex items-center mr-4 transition-colors duration-300 hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500`}
             onClick={() => setCurrentType(type)}
           >
@@ -108,6 +114,12 @@ const Generate = () => {
       <button
         onClick={() => getFn()}
         disabled={loading}
+        style={{
+          opacity: loading ? 0.6 : 1,
+          cursor: loading ? "not-allowed" : "pointer",
+          pointerEvents: loading ? "none" : "auto",
+          transition: "opacity 0.3s"
+        }}
         type="submit"
         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
@@ -120,8 +132,9 @@ const Generate = () => {
 
       <div>
         <div
-          className={`bg-gray-100 p-2 text-base mt-4 rounded-lg mx-3 transition-all duration-[3000ms] ${data === null ? "transition-all duration-[3000ms] w-[0%] h-[0px] opacity-0 pointer-events-none" : "min-h-[100px] opacity-100 w-full"}`}
+          className={`bg-gray-100 p-2 px-4 text-base mt-4 rounded-lg mx-3 transition-all duration-[3000ms] ${data === null ? "transition-all duration-[3000ms] w-[0%] h-[0px] opacity-0 pointer-events-none" : "min-h-[100px] opacity-100 "}`}
           style={{
+            minWidth: "400px",
             maxHeight: data === null ? 0 : 500,
             overflow: "hidden",
             transition: "opacity 1s, max-height 1s"
@@ -129,6 +142,9 @@ const Generate = () => {
         >
           {data !== null && data?.data !== null && (
             <div>
+              <p className="w-fit mx-auto p-1 px-2 mb-2 bg-blue-300 rounded-xl capitalize">
+                {data.data.type}
+              </p>
               {data.data.text}
 
               <h4 className="bg-blue-300 p-2 rounded-xl w-fit mt-3">
