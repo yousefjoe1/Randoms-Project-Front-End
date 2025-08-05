@@ -13,12 +13,8 @@ export async function isTokenExist() {
       const response = await axios.get(`${url}/api/verify-user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      //   revalidatePath('/')
-
       return { data: response.data, bool: true, tok: token }; // Return the fetched data
     } catch (err: unknown) {
-      console.log("🚀 ~ getCart ~ err:", err);
-      // console.error('Error fetching data:', err.response?.status);
       return { err };
     }
   } else {

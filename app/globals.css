@@ -230,3 +230,10 @@ button {
 .base-btn:hover .base-btn-text-two {
   top: 50%;
 }
+
+
+.full-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

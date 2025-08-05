@@ -13,13 +13,9 @@ export async function generateFn(type: string) {
       const response = await axios.get(`${url}/api/generate?type=${type}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("🚀 ~ generateFn ~ response:", response)
-      //   revalidatePath('/')
 
       return { data: response.data, bool: true, tok: token }; // Return the fetched data
     } catch (err: unknown) {
-      console.log("🚀 ~ getCart ~ err:", err);
-      // console.error('Error fetching data:', err.response?.status);
       return { err };
     }
   } else {

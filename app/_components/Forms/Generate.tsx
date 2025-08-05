@@ -1,16 +1,15 @@
 "use client";
 import { generateFn } from "@/app/_actions/generateFn";
 import { Toaster } from "@/components/ui/sonner";
-import { Loader2 } from "lucide-react";
+import { CircleQuestionMark, Loader2, Shuffle } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 interface DataType {
-  data: { text: string; author: string,type: string } | null; // Adjusted to match the expected structure
+  data: { text: string; author: string; type: string } | null; // Adjusted to match the expected structure
   text: string;
   author: string;
   id: number;
-  // Add other properties if needed
 }
 
 const Generate = () => {
@@ -19,7 +18,7 @@ const Generate = () => {
       duration: time,
       style: {
         backgroundColor: color,
-      }
+      },
     });
   };
 
@@ -33,7 +32,6 @@ const Generate = () => {
     setLoading(true);
     try {
       const res = await generateFn(currentType);
-      console.log("🚀 ~ getFn ~ res:", res);
       setData(null); // Reset data before fetching new data
 
       setTimeout(() => {
@@ -47,10 +45,9 @@ const Generate = () => {
           setData(null);
           showToast("No data found", "yellow");
         }
-        
+        setLoading(false);
       }, 500);
-      // Optionally log for debugging
-      // console.log("🚀 ~ res ~ res:", res)
+      setLoading(false);
     } catch (error) {
       setData(null);
       console.error("Error fetching data:", error);
@@ -60,43 +57,33 @@ const Generate = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const getFn = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const res = await generateFn(currentType);
-  //       console.log("🚀 ~ getFn ~ res:", res)
-  //       if (res && res.data) {
-  //         if (res.data) {
-  //           showToast(`${currentType} Generated`, 'green');
-  //         }
-  //         setData(res.data);
-  //       } else {
-  //         setData(null);
-  //         showToast('No data found', 'yellow');
-  //       }
-  //       // Optionally log for debugging
-  //       // console.log("🚀 ~ res ~ res:", res)
-  //     } catch (error) {
-  //       setData(null);
-  //       console.error("Error fetching data:", error);
-  //       showToast('Failed to fetch data', 'red');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   getFn()
-  // }, [refetch]);
-
   return (
     <div className="lg:w-1/2 w-full mx-3 flex flex-col gap-3 items-center bg-gray-300 rounded-xl py-2">
       <Toaster closeButton position="bottom-center" />
 
-      <button>
-        
-      </button>
+      {currentType !== "random" ? (
+        <button
+          onClick={() => setCurrentType("random")}
+          title="Random Type"
+          className="full-center w-9 h-9 bg-gray-100 hover:bg-blue-300 rounded-full"
+        >
+          <Shuffle />
+        </button>
+      ) : (
+        <button
+          onClick={() => setCurrentType("advice")}
+          title="Show Types"
+          className="full-center w-9 h-9 bg-gray-100 hover:bg-blue-300 rounded-full"
+        >
+          <CircleQuestionMark />
+        </button>
+      )}
 
-      <div className={`${currentType == 'random'? 'h-0 overflow-hidden' : ''} transition-all duration-[3000ms]`}>
+      <div
+        className={`${
+          currentType == "random" ? "h-0 overflow-hidden" : "h-[60px]"
+        } transition-all duration-[1000ms] flex items-start w-full justify-center`}
+      >
         {genratingType.map((type, index) => (
           <button
             title={type}
@@ -118,7 +105,7 @@ const Generate = () => {
           opacity: loading ? 0.6 : 1,
           cursor: loading ? "not-allowed" : "pointer",
           pointerEvents: loading ? "none" : "auto",
-          transition: "opacity 0.3s"
+          transition: "opacity 0.3s",
         }}
         type="submit"
         className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -132,12 +119,15 @@ const Generate = () => {
 
       <div>
         <div
-          className={`bg-gray-100 p-2 px-4 text-base mt-4 rounded-lg mx-3 transition-all duration-[3000ms] ${data === null ? "transition-all duration-[3000ms] w-[0%] h-[0px] opacity-0 pointer-events-none" : "min-h-[100px] opacity-100 "}`}
+          className={`bg-gray-100 p-2 px-4 text-base mt-4 rounded-lg mx-3 transition-all duration-[3000ms] ${
+            data === null
+              ? "transition-all duration-[3000ms] w-[0%] h-[0px] opacity-0 pointer-events-none"
+              : "min-h-[100px] lg:min-w-[400px] opacity-100 "
+          }`}
           style={{
-            minWidth: "400px",
             maxHeight: data === null ? 0 : 500,
             overflow: "hidden",
-            transition: "opacity 1s, max-height 1s"
+            transition: "opacity 1s, max-height 1s",
           }}
         >
           {data !== null && data?.data !== null && (
