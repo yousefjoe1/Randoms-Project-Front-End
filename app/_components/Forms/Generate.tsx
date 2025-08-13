@@ -1,15 +1,17 @@
 "use client";
 import { generateFn } from "@/app/_actions/generateFn";
 import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { CircleQuestionMark, Loader2, Shuffle } from "lucide-react";
 import React, { useState } from "react";
-import { toast } from "sonner";
+import AddToFavorite from "./AddToFavorite";
 
 interface DataType {
-  data: { text: string; author: string; type: string } | null; // Adjusted to match the expected structure
+  data: { text: string; author: string; type: string ; id: number,isFavorited: boolean} | null; // Adjusted to match the expected structure
   text: string;
   author: string;
   id: number;
+  isFavorite: boolean;
 }
 
 const Generate = () => {
@@ -23,6 +25,7 @@ const Generate = () => {
   };
 
   const [data, setData] = useState<DataType | null>(null);
+  console.log("🚀 ~ Generate ~ data:", data)
   const [loading, setLoading] = useState(false);
 
   const genratingType = ["advice", "quote", "joke"];
@@ -116,7 +119,6 @@ const Generate = () => {
           <Loader2 className="animate-spin" />
         )}
       </button>
-
       <div>
         <div
           className={`bg-gray-100 p-2 px-4 text-base mt-4 rounded-lg mx-3 transition-all duration-[3000ms] ${
@@ -131,19 +133,21 @@ const Generate = () => {
           }}
         >
           {data !== null && data?.data !== null && (
-            <div>
-              <p className="w-fit mx-auto p-1 px-2 mb-2 bg-blue-300 rounded-xl capitalize">
-                {data.data.type}
-              </p>
-              {data.data.text}
+            <div className="relative">
+            <AddToFavorite id={data.data.id} type={data.data.type} isFavorite={data.data.isFavorited} />
+            <p className="w-fit mx-auto font-semibold p-1 px-2 mb-2 bg-blue-300 rounded-xl capitalize">
+              {data?.data?.type}
+            </p>
+            {data?.data?.text}
 
-              <h4 className="bg-blue-300 p-2 rounded-xl w-fit mt-3">
-                Author : <b>{data.data.author}</b>
-              </h4>
-            </div>
+            <h4 className="bg-blue-300 p-2 rounded-xl w-fit mt-3">
+              Author : <b>{data?.data?.author}</b>
+            </h4>
+          </div>
           )}
         </div>
       </div>
+
     </div>
   );
 };

@@ -25,8 +25,9 @@ const LoginForm = () => {
   const showToast = (msg: string, color: string, time: number = 5000) => {
     toast(msg, {
       duration: time,
-      unstyled: true,
-      className: `border-t-4 border-${color}-500 rounded-b text-${color}-900 px-4 py-3 shadow-md`,
+      style: {
+        backgroundColor: color,
+      },
     });
   };
 
@@ -72,7 +73,7 @@ const LoginForm = () => {
           });
         }
       } else {
-        showToast(resp.msg, "red");
+        showToast(resp.msg, "green");
       }
     } catch (er) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Inputs>= ~ er:", er);

@@ -13,31 +13,24 @@ import RegisterForm from "./RegisterForm";
 import { isTokenExist } from "@/app/_actions/isTokenExist";
 import UserDetails from "../../User/UserDetails";
 import Logout from "./Logout";
+import Link from "next/link";
+import { Star } from "lucide-react";
 
 const Auth = async () => {
 const token = await isTokenExist();
   const isAuth = token.bool; // Check if the user is authenticated based on the token
-  // const [isAuth, setIsAuth] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   const checkAuth = async () => {
-  //     // Dynamically import to avoid SSR issues if needed
-  //     const token = await isTokenExist();
-  //     console.log("🚀 ~ checkAuth ~ token:", token)
-  //     if (token.bool) {
-  //       setIsAuth(true);
-  //     } else {
-  //       setIsAuth(false);
-  //     }
-  //   };
-
-  //   checkAuth();
-  // }, []);
   return (
     <div>
       {
         isAuth ?
         <div className="flex items-center justify-between gap-4">
+          <Link
+          href={"/favorites"}
+          className="text-lg font-semibold hover:text-gray-200 transition-colors hover:border-b-2 hover:border-white"
+        >
+          <Star />
+        </Link>
           <UserDetails />
           <Logout />
         </div>

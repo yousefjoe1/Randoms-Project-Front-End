@@ -1,8 +1,11 @@
 import { Laugh, Notebook, Quote } from "lucide-react";
 import Link from "next/link";
 import Generate from "./_components/Forms/Generate";
-
 export default function Home() {
+
+    
+
+
   return (
     <main>
 
@@ -30,10 +33,10 @@ export default function Home() {
 
 
 
-        <div className="flex justify-center items-center w-full pt-10">
+        <div className="flex flex-col justify-center items-center w-full pt-10">
           <Generate />
-
         </div>
+          {/* <QouteData /> */}
     </main>
   );
 }

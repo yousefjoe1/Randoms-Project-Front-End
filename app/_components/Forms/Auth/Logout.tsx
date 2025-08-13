@@ -8,11 +8,11 @@ const Logout = () => {
         await logout();
     };
   return (
-    <div>
+    <>
       <button onClick={handleLogout} className="">
-        <LogOut />
+        <LogOut size={20} />
       </button>
-    </div>
+    </>
   )
 }
 
