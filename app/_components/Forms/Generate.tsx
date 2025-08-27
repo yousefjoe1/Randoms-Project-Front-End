@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import AddToFavorite from "./AddToFavorite";
 
 interface DataType {
-  data: { text: string; author: string; type: string ; id: number,isFavorited: boolean} | null; // Adjusted to match the expected structure
+  data: { text: string; author: string; type: string ; id: number,isFavorite: boolean} | null; // Adjusted to match the expected structure
   text: string;
   author: string;
   id: number;
@@ -25,7 +25,6 @@ const Generate = () => {
   };
 
   const [data, setData] = useState<DataType | null>(null);
-  console.log("🚀 ~ Generate ~ data:", data)
   const [loading, setLoading] = useState(false);
 
   const genratingType = ["advice", "quote", "joke"];
@@ -39,14 +38,14 @@ const Generate = () => {
 
       setTimeout(() => {
         if (res && res.data) {
-          if (res.data) {
-            showToast(`${currentType} Generated`, "lightgreen");
-          }
+          // if (res.data) {
+          //   showToast(`${currentType} Generated`, "lightgreen");
+          // }
           setData(res.data);
         } else {
           setLoading(true);
           setData(null);
-          showToast("No data found", "yellow");
+          showToast("No data found", "orange");
         }
         setLoading(false);
       }, 500);
@@ -134,7 +133,7 @@ const Generate = () => {
         >
           {data !== null && data?.data !== null && (
             <div className="relative">
-            <AddToFavorite id={data.data.id} type={data.data.type} isFavorite={data.data.isFavorited} />
+            <AddToFavorite id={data.data.id} type={data.data.type} isFavorite={data.data.isFavorite} />
             <p className="w-fit mx-auto font-semibold p-1 px-2 mb-2 bg-blue-300 rounded-xl capitalize">
               {data?.data?.type}
             </p>

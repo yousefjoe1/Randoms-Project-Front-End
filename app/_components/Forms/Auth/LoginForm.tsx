@@ -73,7 +73,7 @@ const LoginForm = () => {
           });
         }
       } else {
-        showToast(resp.msg, "green");
+        showToast(resp.msg, "blue");
       }
     } catch (er) {
       console.log("🚀 ~ constonSubmit:SubmitHandler<Inputs>= ~ er:", er);
@@ -126,7 +126,7 @@ const LoginForm = () => {
             disabled={isSubmit}
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"
           >
-            {isSubmit ? <Loader /> : <span>Login</span>}
+            {isSubmit ? <Loader className="animate-spin" /> : <span>Login</span>}
           </button>
           {isAuthenticated && (
             <Link
